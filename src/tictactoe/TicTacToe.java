@@ -14,7 +14,7 @@ public class TicTacToe {
             BoardPrinter printer = new BoardPrinter();
             printer.print(board);
 
-            InputValidator inputValidator = new InputValidator();
+            InputManager inputManager = new InputManager();
 
             Arbiter arbiter = new Arbiter();
 
@@ -24,14 +24,16 @@ public class TicTacToe {
             System.out.println("Le toca tirar al jugador " + currentPlayer);
 
             while ((input = reader.readLine()) != null) {
-                boolean isInputValid = inputValidator.validate(board, input);
+                boolean isInputValid = inputManager.validate(board, input);
 
                 if (! isInputValid) {
                     System.out.println("Jugada inválida, vuelve a tirar un número válido del 1 al 9.");
                     continue;
                 }
 
-                board.update(currentPlayer, input);
+                int playerInput = inputManager.parse(input);
+
+                board.update(currentPlayer, playerInput);
 
                 printer.print(board);
 
