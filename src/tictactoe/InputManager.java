@@ -6,11 +6,7 @@ package tictactoe;
 public class InputManager {
     public boolean validate(Board board, String input) {
         int position = parse(input);
-        if (board.getState()[position] == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return board.getState()[position - 1] == 0;
     }
 
     /**
@@ -18,8 +14,7 @@ public class InputManager {
      */
     public int parse(String input) {
         try {
-            int parsedInput = Integer.parseInt(input);
-            return parsedInput;
+            return Integer.parseInt(input);
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
         }

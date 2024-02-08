@@ -5,21 +5,21 @@ package tictactoe;
  */
 public class BoardPrinter {
     public void print(Board board) {
-        int [] entryData = board.getState();
-        char [] entryDataToChar = new char[9];
-        for(int i=0; i < 9 ;i++){
-            switch (entryData[i]){
-                case 0 -> entryDataToChar[i]= ' ';
-                case 1 -> entryDataToChar[i]= 'O';
-                case 2 -> entryDataToChar[i]= 'X';
+        int[] boardState = board.getState();
+        char[] boardToChar = new char[9];
+        for (int i = 0; i < 9; i++) {
+            switch (boardState[i]) {
+                case 0 -> boardToChar[i] = ' ';
+                case 1 -> boardToChar[i] = 'O';
+                case 2 -> boardToChar[i] = 'X';
             }
         }
         System.out.println("┌───┬───┬───┐");
-        System.out.println("│ " + entryDataToChar[0] + " │ " + entryDataToChar[1] + " │ " + entryDataToChar[2] + " │");
+        System.out.println("│ " + boardToChar[0] + " │ " + boardToChar[1] + " │ " + boardToChar[2] + " │");
         System.out.println("├───┼───┼───┤");
-        System.out.println("│ " + entryDataToChar[3] + " │ " + entryDataToChar[4] + " │ " + entryDataToChar[5] + " │");
+        System.out.println("│ " + boardToChar[3] + " │ " + boardToChar[4] + " │ " + boardToChar[5] + " │");
         System.out.println("├───┼───┼───┤");
-        System.out.println("│ " + entryDataToChar[6] + " │ " + entryDataToChar[7] + " │ " + entryDataToChar[8] + " │");
+        System.out.println("│ " + boardToChar[6] + " │ " + boardToChar[7] + " │ " + boardToChar[8] + " │");
         System.out.println("└───┴───┴───┘");
     }
 }
