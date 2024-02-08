@@ -1,3 +1,5 @@
+package introduction;
+
 public class Chair {
     private int numberOfLegs;
     private String material;
