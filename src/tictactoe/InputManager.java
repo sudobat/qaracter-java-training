@@ -12,6 +12,6 @@ public class InputManager {
      * Le va a entrar un String "1" - "9" y va a devolver un entero 1 - 9.
      */
     public int parse(String input) {
-        return 0;
+        return 1;
     }
 }
