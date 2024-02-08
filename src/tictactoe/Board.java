@@ -4,7 +4,13 @@ package tictactoe;
  * Author: Elio Centurión
  */
 public class Board {
-    public void update(int currentPlayer, String input) {
+    private final int[] state = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
+    public void update(int currentPlayer, int input) {
+        state[input - 1] = currentPlayer;
+    }
+
+    public int[] getState() {
+        return state;
     }
 }
