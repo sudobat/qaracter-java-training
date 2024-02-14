@@ -1,6 +1,5 @@
 package tictactoe;
 
-public interface Board {
+public interface Board extends ReadOnlyBoard {
     void update(int currentPlayer, int input);
-    int[] getState();
 }

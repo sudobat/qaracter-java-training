@@ -2,12 +2,13 @@ package tictactoe.implementations;
 
 import tictactoe.Board;
 import tictactoe.InputManager;
+import tictactoe.ReadOnlyBoard;
 
 /**
  * Author: Brenda Lilian
  */
 public class InputManagerImplementation implements InputManager {
-    public boolean validate(Board board, String input) {
+    public boolean validate(ReadOnlyBoard board, String input) {
         int position = parse(input);
         return board.getState()[position - 1] == 0;
     }

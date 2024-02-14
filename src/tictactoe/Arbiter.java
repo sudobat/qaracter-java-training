@@ -1,5 +1,5 @@
 package tictactoe;
 
 public interface Arbiter {
-    int checkIfGameIsFinished(Board board);
+    int checkIfGameIsFinished(ReadOnlyBoard board);
 }

@@ -1,7 +1,7 @@
 package tictactoe.implementations;
 
 import tictactoe.Arbiter;
-import tictactoe.Board;
+import tictactoe.ReadOnlyBoard;
 
 /**
  * Author Matias Rotmistrovsky
@@ -14,7 +14,7 @@ public class ArbiterImplementation implements Arbiter {
      * Si result vale 0, ha resultado en empate
      * Si result vale -1, el juego sigue.
      */
-    public int checkIfGameIsFinished(Board board) {
+    public int checkIfGameIsFinished(ReadOnlyBoard board) {
         int winner = checkWinner(board);
         if (checkCompletion(board)) {
             return winner;
@@ -27,7 +27,7 @@ public class ArbiterImplementation implements Arbiter {
 
     }
 
-    private boolean checkCompletion(Board board) {
+    private boolean checkCompletion(ReadOnlyBoard board) {
         boolean finished = false;
         int numberOfPositions = 0;
 
@@ -43,7 +43,7 @@ public class ArbiterImplementation implements Arbiter {
         return finished;
     }
 
-    private int checkWinner(Board board) {
+    private int checkWinner(ReadOnlyBoard board) {
 
         int[] boardState = board.getState();
         /*HORIZONTAL*/

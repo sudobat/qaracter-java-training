@@ -2,12 +2,13 @@ package tictactoe.implementations;
 
 import tictactoe.Board;
 import tictactoe.BoardPrinter;
+import tictactoe.ReadOnlyBoard;
 
 /**
  * Author: Javier Nakama
  */
 public class BoardPrinterSmall implements BoardPrinter {
-    public void print(Board board) {
+    public void print(ReadOnlyBoard board) {
         int[] boardState = board.getState();
         char[] boardToChar = new char[9];
         for (int i = 0; i < 9; i++) {
