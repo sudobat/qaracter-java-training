@@ -17,7 +17,13 @@ public class InputManagerImplementation implements InputManager {
      */
     public int parse(String input) {
         try {
-            return Integer.parseInt(input);
+            int output = Integer.parseInt(input);
+
+            if (output < 1 || output > 9) {
+                return 0;
+            }
+
+            return output;
         } catch (NumberFormatException ex) {
             return 0;
         }
