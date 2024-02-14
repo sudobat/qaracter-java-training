@@ -5,24 +5,36 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class TicTacToe {
+
+    private final Board board;
+    private final BoardPrinter printer;
+    private final InputManager inputManager;
+    private final Arbiter arbiter;
+    private final BufferedReader reader;
+    private int currentPlayer;
+
+    public TicTacToe(
+            Board board,
+            BoardPrinter printer,
+            InputManager inputManager,
+            Arbiter arbiter
+    ) {
+        this.board = board;
+        this.printer = printer;
+        this.inputManager = inputManager;
+        this.arbiter = arbiter;
+
+        currentPlayer = 1;
+
+        reader = new BufferedReader(new InputStreamReader(System.in));
+    }
+
     public void play() {
         try {
-            int currentPlayer = 1;
-
-            Board board = new Board();
-
-            BoardPrinter printer = new BoardPrinter();
             printer.print(board);
-
-            InputManager inputManager = new InputManager();
-
-            Arbiter arbiter = new Arbiter();
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            String input;
-
             System.out.println("Le toca tirar al jugador " + currentPlayer);
 
+            String input;
             while ((input = reader.readLine()) != null) {
                 boolean isInputValid = inputManager.validate(board, input);
 
@@ -37,12 +49,6 @@ public class TicTacToe {
 
                 printer.print(board);
 
-                /**
-                 * Si result vale 1, ha ganado el jugador 1
-                 * Si result vale 2, ha ganado el jugador 2
-                 * Si result vale 0, ha resultado en empate
-                 * Si result vale -1, el juego sigue.
-                 */
                 int result = arbiter.checkIfGameIsFinished(board);
 
                 if (result == 1) {
@@ -56,16 +62,20 @@ public class TicTacToe {
                     break;
                 }
 
-                if (currentPlayer == 1) {
-                    currentPlayer = 2;
-                } else {
-                    currentPlayer = 1;
-                }
+                changeCurrentPlayer();
 
                 System.out.println("Le toca tirar al jugador " + currentPlayer);
             }
         } catch (IOException exception) {
           System.out.println(exception.getMessage());
+        }
+    }
+
+    private void changeCurrentPlayer() {
+        if (currentPlayer == 1) {
+            currentPlayer = 2;
+        } else {
+            currentPlayer = 1;
         }
     }
 }
