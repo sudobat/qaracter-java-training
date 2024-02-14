@@ -1,6 +1,5 @@
 package tictactoe.implementations;
 
-import tictactoe.Board;
 import tictactoe.InputManager;
 import tictactoe.ReadOnlyBoard;
 
@@ -20,8 +19,7 @@ public class InputManagerImplementation implements InputManager {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException ex) {
-            ex.printStackTrace();
+            return 0;
         }
-        return 0;
     }
 }
