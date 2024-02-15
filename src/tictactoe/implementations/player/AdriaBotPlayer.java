@@ -20,9 +20,9 @@ public class AdriaBotPlayer implements Player {
 
         int[] state = board.getState();
 
-        for (int square: state) {
-            if (square == 0) {
-                return String.valueOf(square + 1);
+        for (int position = 0; position < 9; position++) {
+            if (state[position] == 0) {
+                return String.valueOf(position + 1);
             }
         }
 
