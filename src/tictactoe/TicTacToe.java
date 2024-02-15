@@ -29,7 +29,7 @@ public class TicTacToe {
         currentPlayer = 1;
     }
 
-    public void play() {
+    public int play() {
         printer.print(board);
         System.out.println("Le toca tirar al jugador " + currentPlayer);
 
@@ -62,19 +62,21 @@ public class TicTacToe {
 
             if (result == 1) {
                 System.out.println("Ha ganado el jugador 1!");
-                break;
+                return result;
             } else if (result == 2) {
                 System.out.println("Ha ganado el jugador 2!");
-                break;
+                return result;
             } else if (result == 0) {
                 System.out.println("Empate!");
-                break;
+                return result;
             }
 
             changeCurrentPlayer();
 
             System.out.println("Le toca tirar al jugador " + currentPlayer);
         }
+
+        return 0;
     }
 
     private void changeCurrentPlayer() {
