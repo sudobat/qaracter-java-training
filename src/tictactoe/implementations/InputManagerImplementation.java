@@ -9,6 +9,10 @@ import tictactoe.ReadOnlyBoard;
 public class InputManagerImplementation implements InputManager {
     public boolean validate(ReadOnlyBoard board, String input) {
         int position = parse(input);
+        if (position == 0) {
+            return false;
+        }
+
         return board.getState()[position - 1] == 0;
     }
 
