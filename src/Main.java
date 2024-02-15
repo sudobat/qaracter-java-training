@@ -2,6 +2,8 @@ import tictactoe.*;
 import tictactoe.implementations.*;
 import tictactoe.implementations.boardPrinter.BoardPrinterLarge;
 import tictactoe.implementations.player.AdriaBotPlayer;
+import tictactoe.implementations.player.BrendaBotPlayer;
+import tictactoe.implementations.player.ElioBotPlayer;
 import tictactoe.implementations.player.HumanPlayer;
 
 public class Main {
