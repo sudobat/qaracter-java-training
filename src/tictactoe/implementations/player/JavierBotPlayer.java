@@ -25,7 +25,7 @@ public class JavierBotPlayer implements Player {
             }
         }
         if(movesCount<2){
-            
+
         }
 
         return "";
