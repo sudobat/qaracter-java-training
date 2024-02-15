@@ -16,8 +16,12 @@ public class BoardImplementation implements Board {
         this.state = state;
     }
 
-    public void update(int currentPlayer, int input) {
-        state[input - 1] = currentPlayer;
+    public boolean update(int currentPlayer, int input) {
+
+        if (currentPlayer == 1 || currentPlayer == 2) {
+            state[input - 1] = currentPlayer;
+            return true;
+        } else return false;
     }
 
     public int[] getState() {
