@@ -30,6 +30,6 @@ class InputManagerImplementationTest {
 
     @Test
     void parse_returns_0_when_receivinh_an_non_alfa_numeric_caracter() {
-        assertEquals(0,inputManager.parse(","));
+        assertEquals(0, inputManager.parse(","));
     }
 }
