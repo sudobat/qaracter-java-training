@@ -1,6 +1,5 @@
-package tictactoe.implementations;
+package tictactoe.implementations.boardPrinter;
 
-import tictactoe.Board;
 import tictactoe.BoardPrinter;
 import tictactoe.ReadOnlyBoard;
 

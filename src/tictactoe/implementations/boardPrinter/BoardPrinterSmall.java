@@ -1,4 +1,4 @@
-package tictactoe.implementations;
+package tictactoe.implementations.boardPrinter;
 
 import tictactoe.Board;
 import tictactoe.BoardPrinter;
