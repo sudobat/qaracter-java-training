@@ -4,18 +4,9 @@ import tictactoe.Player;
 import tictactoe.ReadOnlyBoard;
 
 public class JavierBotPlayer implements Player {
-    int myTurn;
-
-    public JavierBotPlayer(int myTurn) {
-        if (myTurn != 1 && myTurn != 2) {
-            this.myTurn = 1;
-        }
-
-        this.myTurn = myTurn;
-    }
 
     @Override
-    public String makeMove(ReadOnlyBoard board) {
+    public String makeMove(ReadOnlyBoard board, int myTurn) {
 
         int[] state = board.getState();
         int movesCount = 0;

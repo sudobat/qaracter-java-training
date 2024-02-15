@@ -1,48 +1,68 @@
 import tictactoe.*;
-import tictactoe.implementations.*;
+import tictactoe.implementations.ArbiterImplementation;
+import tictactoe.implementations.BoardImplementation;
+import tictactoe.implementations.InputManagerImplementation;
 import tictactoe.implementations.boardPrinter.BoardPrinterLarge;
-import tictactoe.implementations.player.AdriaBotPlayer;
-import tictactoe.implementations.player.BrendaBotPlayer;
-import tictactoe.implementations.player.ElioBotPlayer;
-import tictactoe.implementations.player.HumanPlayer;
+import tictactoe.implementations.player.*;
+
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        int adriaBotScore = 0;
-        int elioBotScore = 0;
-        int brendaBotScore = 0;
-        int javierBotScore = 0;
-        int matiasBotScore = 0;
+        Map<Player, Integer> playersWithScores = new HashMap<>() {{
+            put(new AdriaBotPlayer(), 0);
+            put(new ElioBotPlayer(), 0);
+            // put(new JavierBotPlayer(), 0);
+            put(new BrendaBotPlayer(), 0);
+            put(new MatiasBotPlayer(), 0);
+        }};
 
-        int result = playMatch(
-                new AdriaBotPlayer(1),
-                new ElioBotPlayer(2)
-        );
+        playTournament(playersWithScores);
 
-        if (result == 1) {
-            adriaBotScore++;
-        } else if (result == 2) {
-            elioBotScore++;
+        printTournamentResult(playersWithScores);
+    }
+
+    private static void playTournament(Map<Player, Integer> playersWithScores) {
+        for (Map.Entry<Player, Integer> player1 : playersWithScores.entrySet()) {
+            for (Map.Entry<Player, Integer> player2 : playersWithScores.entrySet()) {
+                if (player1.getKey() == player2.getKey()) {
+                    continue;
+                }
+
+                int result = playMatch(player1.getKey(), player2.getKey());
+
+                if (result == 1) {
+                    player1.setValue(player1.getValue() + 1);
+                } else if (result == 2) {
+                    player2.setValue(player2.getValue() + 1);
+                }
+            }
         }
+    }
 
-        result = playMatch(
-                new ElioBotPlayer(1),
-                new AdriaBotPlayer(2)
-        );
-
-        if (result == 1) {
-            elioBotScore++;
-        } else if (result == 2) {
-            adriaBotScore++;
-        }
-
+    private static void printTournamentResult(Map<Player, Integer> playersWithScores) {
+        System.out.println("");
         System.out.println("+-------------------+");
         System.out.println("| TOURNAMENT RESULT |");
         System.out.println("+-------------------+");
-        System.out.println("Adria Bot Score: " + adriaBotScore);
-        System.out.println("Elio Bot Score: " + elioBotScore);
+        System.out.println("");
+
+        Comparator<Map.Entry<Player, Integer>> scoreComparator = (p1, p2) -> {
+            Integer s1 = p1.getValue();
+            Integer s2 = p2.getValue();
+            return s2.compareTo(s1);
+        };
+
+        List<Map.Entry<Player, Integer>> listOfEntries
+                = new ArrayList<>(playersWithScores.entrySet());
+
+        listOfEntries.sort(scoreComparator);
+
+        for (Map.Entry<Player, Integer> player : listOfEntries) {
+            System.out.println(player.getKey().getClass().getSimpleName() + " Score: " + player.getValue());
+        }
     }
 
     private static int playMatch(Player player1, Player player2) {

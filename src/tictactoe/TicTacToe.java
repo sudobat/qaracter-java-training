@@ -1,5 +1,7 @@
 package tictactoe;
 
+import java.util.Map;
+
 public class TicTacToe {
 
     private final Board board;
@@ -40,9 +42,9 @@ public class TicTacToe {
         while (result == -1) {
 
             if (currentPlayer == 1) {
-                input = player1.makeMove(board);
+                input = player1.makeMove(board, currentPlayer);
             } else {
-                input = player2.makeMove(board);
+                input = player2.makeMove(board, currentPlayer);
             }
 
             boolean isInputValid = inputManager.validate(board, input);

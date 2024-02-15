@@ -1,5 +1,5 @@
 package tictactoe;
 
 public interface Player {
-    String makeMove(ReadOnlyBoard board);
+    String makeMove(ReadOnlyBoard board, int myTurn);
 }

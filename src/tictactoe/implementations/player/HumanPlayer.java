@@ -16,7 +16,7 @@ public class HumanPlayer implements Player {
     }
 
     @Override
-    public String makeMove(ReadOnlyBoard board) {
+    public String makeMove(ReadOnlyBoard board, int myTurn) {
         try {
             return reader.readLine();
         } catch (IOException exception) {
