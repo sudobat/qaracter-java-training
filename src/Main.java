@@ -14,7 +14,7 @@ public class Main {
         Map<Player, Integer> playersWithScores = new HashMap<>() {{
             put(new AdriaBotPlayer(), 0);
             put(new ElioBotPlayer(), 0);
-            // put(new JavierBotPlayer(), 0);
+            put(new JavierBotPlayer(), 0);
             put(new BrendaBotPlayer(), 0);
             put(new MatiasBotPlayer(), 0);
         }};

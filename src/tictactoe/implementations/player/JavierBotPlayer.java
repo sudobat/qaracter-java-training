@@ -10,24 +10,23 @@ public class JavierBotPlayer implements Player {
 
         int[] state = board.getState();
         int winningPosition;
-        winningPosition = findWinningMove(state);
-        if(winningPosition== -1){
+        winningPosition = findWinningMove(state, myTurn);
+        if (winningPosition == -1) {
             for (int position = 0; position < 9; position++) {
                 if (state[position] == 0) {
                     return String.valueOf(position + 1);
                 }
             }
-        }
-        else
-            return String.valueOf(winningPosition+1);
+        } else
+            return String.valueOf(winningPosition + 1);
         return "";
     }
 
-    public int findWinningMove(int[] state) {
+    public int findWinningMove(int[] state, int myTurn) {
         for (int i = 0; i < 9; i++) {
             if (state[i] == 0) {
-                state[i] = this.myTurn;
-                if (checkWin(this.myTurn, state)) {
+                state[i] = myTurn;
+                if (checkWin(myTurn, state)) {
                     state[i] = 0;
                     return i;
                 }
@@ -36,7 +35,7 @@ public class JavierBotPlayer implements Player {
         }
 
         int opponent;
-        if (this.myTurn == 1)
+        if (myTurn == 1)
             opponent = 2;
         else
             opponent = 1;
