@@ -5,18 +5,8 @@ import tictactoe.ReadOnlyBoard;
 
 public class AdriaBotPlayer implements Player {
 
-    int myTurn;
-
-    public AdriaBotPlayer(int myTurn) {
-        if (myTurn != 1 && myTurn != 2) {
-            this.myTurn = 1;
-        }
-
-        this.myTurn = myTurn;
-    }
-
     @Override
-    public String makeMove(ReadOnlyBoard board) {
+    public String makeMove(ReadOnlyBoard board, int myTurn) {
 
         int[] state = board.getState();
 
