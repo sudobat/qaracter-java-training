@@ -1,11 +1,5 @@
-import tictactoe.*;
-import tictactoe.implementations.ArbiterImplementation;
-import tictactoe.implementations.BoardImplementation;
-import tictactoe.implementations.InputManagerImplementation;
-import tictactoe.implementations.boardPrinter.BoardPrinterLarge;
-import tictactoe.implementations.player.*;
-
-import java.util.*;
+import tictactoe.Tournament;
+import tictactoe.TournamentFactory;
 
 public class Main {
 
