@@ -6,7 +6,7 @@ import tictactoe.Board;
  * Author: Elio Centurión
  */
 public class BoardImplementation implements Board {
-    private final int[] state;
+    private int[] state;
 
     public BoardImplementation() {
         this.state = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -16,6 +16,7 @@ public class BoardImplementation implements Board {
         this.state = state;
     }
 
+    @Override
     public boolean update(int currentPlayer, int input) {
 
         if (currentPlayer == 1 || currentPlayer == 2) {
@@ -24,6 +25,12 @@ public class BoardImplementation implements Board {
         } else return false;
     }
 
+    @Override
+    public void reset() {
+        state = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0};
+    }
+
+    @Override
     public int[] getState() {
         return state;
     }
