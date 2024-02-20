@@ -1,11 +1,12 @@
-import tictactoe.TicTacToe;
+import tictactoe.Tournament;
+import tictactoe.TournamentFactory;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        TicTacToe ticTacToe = new TicTacToe();
-
-        ticTacToe.play();
+        TournamentFactory tournamentFactory = new TournamentFactory();
+        Tournament tournament = tournamentFactory.createTournament();
+        tournament.play();
     }
 }
