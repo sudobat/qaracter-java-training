@@ -1,31 +1,45 @@
 package tictactoe.implementations.player;
 
-import tictactoe.Arbiter;
-import tictactoe.Board;
-import tictactoe.Player;
-import tictactoe.ReadOnlyBoard;
+import tictactoe.*;
 import tictactoe.implementations.ArbiterImplementation;
 import tictactoe.implementations.BoardImplementation;
+import tictactoe.implementations.boardPrinter.BoardPrinterLarge;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AdriaBotV2Player implements Player {
 
     private final Arbiter arbiter;
+    private final BoardPrinter boardPrinter;
+
+    private final boolean debug;
+
+    public AdriaBotV2Player(boolean debug) {
+        arbiter = new ArbiterImplementation();
+        boardPrinter = new BoardPrinterLarge();
+        this.debug = debug;
+    }
 
     public AdriaBotV2Player() {
-        arbiter = new ArbiterImplementation();
+        this(false);
     }
 
     @Override
     public String makeMove(ReadOnlyBoard board, int myTurn) {
 
+        long startTime = System.nanoTime();
+
+        if (debug) {
+            boardPrinter.print(board);
+        }
+
         int[] state = board.getState();
 
         Board virtualBoard = new BoardImplementation(state);
 
-        int bestMove = -2;
+        int bestMove = -1;
         int bestMoveValue = -1000;
 
         int newTurn = 1;
@@ -33,29 +47,51 @@ public class AdriaBotV2Player implements Player {
             newTurn = 2;
         }
 
-        for (int availableMove : getAvailableMoves(state)) {
-            int moveValue = negaMax(virtualBoard, availableMove, newTurn);
+        List<Integer> availableMoves = getAvailableMoves(state);
+
+        for (int availableMove : availableMoves) {
+            Board newVirtualBoard = new BoardImplementation(virtualBoard.getState());
+            newVirtualBoard.update(myTurn, availableMove + 1);
+
+            int moveValue = - 1 * negaMax(newVirtualBoard, newTurn);
+
+            if (debug) {
+                System.out.println("Move = " + (availableMove + 1) + " evaluation = " + moveValue);
+            }
 
             if (moveValue > bestMoveValue) {
                 bestMove = availableMove;
+                bestMoveValue = moveValue;
             }
+        }
+
+        if (debug) {
+            System.out.println();
+            System.out.println("Best move = " + (bestMove + 1) + " evaluation = " + bestMoveValue);
+
+            long endTime = System.nanoTime();
+            long duration = (endTime - startTime) / 1_000_000;
+
+            System.out.println("Execution time: " + duration + " ms");
         }
 
         return String.valueOf(bestMove + 1);
     }
 
-    private int negaMax(ReadOnlyBoard virtualBoard, int move, int myTurn) {
+    private int negaMax(ReadOnlyBoard virtualBoard, int myTurn) {
 
-        Board newVirtualBoard = new BoardImplementation(virtualBoard.getState());
-        newVirtualBoard.update(myTurn, move);
-
-        int evaluation = arbiter.checkIfGameIsFinished(newVirtualBoard);
+        int evaluation = arbiter.checkIfGameIsFinished(virtualBoard);
 
         if (evaluation != -1) {
+            int multiplier = 1;
+            if (myTurn == 2) {
+                multiplier = -1;
+            }
+            
             if (evaluation == 1) {
-                return 1000;
+                return multiplier * 1000;
             } else if (evaluation == 2) {
-                return -1000;
+                return multiplier * -1000;
             } else {
                 return 0;
             }
@@ -67,8 +103,14 @@ public class AdriaBotV2Player implements Player {
             newTurn = 2;
         }
 
-        for (int availableMove : getAvailableMoves(newVirtualBoard.getState())) {
-            value = Math.max(value, -1 * negaMax(newVirtualBoard, availableMove, newTurn));
+        int[] state = virtualBoard.getState();
+        List<Integer> availableMoves = getAvailableMoves(state);
+
+        for (int availableMove : availableMoves) {
+            Board newVirtualBoard = new BoardImplementation(state);
+            newVirtualBoard.update(myTurn, availableMove + 1);
+
+            value = Math.max(value, -1 * negaMax(newVirtualBoard, newTurn));
         }
 
         return value;

@@ -2,6 +2,8 @@ package tictactoe.implementations;
 
 import tictactoe.Board;
 
+import java.util.Arrays;
+
 /**
  * Author: Elio Centurión
  */
@@ -13,7 +15,7 @@ public class BoardImplementation implements Board {
     }
 
     public BoardImplementation(int[] state) {
-        this.state = state;
+        this.state = Arrays.copyOf(state, state.length);
     }
 
     @Override
@@ -32,6 +34,6 @@ public class BoardImplementation implements Board {
 
     @Override
     public int[] getState() {
-        return state;
+        return Arrays.copyOf(state, state.length);
     }
 }
