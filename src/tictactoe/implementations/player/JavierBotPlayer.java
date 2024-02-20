@@ -52,10 +52,13 @@ public class JavierBotPlayer implements Player {
         return -1;
     }
 
-    private boolean checkWin(int player, int[] state) {
+    private int checkWin(int player, int[] state) {
         for (int i = 0; i < 3; i++) {
-            if (state[i * 3] == player && state[i * 3 + 1] == player && state[i * 3 + 2] == player) {
-                return true;
+            if (state[i * 3] == state[i * 3 + 1] && state[i * 3 + 1] == state[i * 3 + 2] ) {
+                if (state[i * 3]==player)
+                    return 10;
+                else
+                    return -10;
             }
         }
 

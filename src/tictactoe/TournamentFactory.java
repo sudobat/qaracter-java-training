@@ -18,11 +18,10 @@ public class TournamentFactory {
         Arbiter arbiter = new ArbiterImplementation();
 
         List<Player> players = new ArrayList<>() {{
-            add(new AdriaBotPlayer());
-            add(new ElioBotPlayer());
             add(new JavierBotPlayer());
             add(new BrendaBotPlayer());
             add(new MatiasBotPlayer());
+            add(new AdriaBotV2Player());
         }};
 
         return new Tournament(
