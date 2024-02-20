@@ -3,16 +3,40 @@ package tictactoe.implementations.player;
 import tictactoe.Player;
 import tictactoe.ReadOnlyBoard;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class BrendaBotPlayer implements Player {
 
     @Override
     public String makeMove(ReadOnlyBoard board, int myTurn) {
         int[] state = board.getState();
 
+        // Para ganar
+        int winMove = findWinningMove(state, myTurn);
+        if (winMove != -1) {
+            return String.valueOf(winMove);
+        }
+
+        // Bloquear
+        int blockMove = findWinningMove(state, myTurn == 1 ? 2 : 1);
+        if (blockMove != -1) {
+            return String.valueOf(blockMove);
+        }
+
+        // Esquina-Centro-Lado
+        List<Integer> moves = new ArrayList<>();
         for (int position = 0; position < 9; position++) {
             if (state[position] == 0) {
-                return String.valueOf(position + 1);
+                moves.add(position + 1);
             }
+        }
+
+        // aleatorio
+        if (!moves.isEmpty()) {
+            Random random = new Random();
+            return String.valueOf(moves.get(random.nextInt(moves.size())));
         }
 
         return "";
