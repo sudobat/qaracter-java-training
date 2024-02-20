@@ -6,7 +6,6 @@ import tictactoe.implementations.BoardImplementation;
 import tictactoe.implementations.boardPrinter.BoardPrinterLarge;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AdriaBotV2Player implements Player {
