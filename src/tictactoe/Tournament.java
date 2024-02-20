@@ -38,12 +38,22 @@ public class Tournament {
                     continue;
                 }
 
+                System.out.println();
+                System.out.println("Partida " + player1WithScore.getKey().getClass().getSimpleName()
+                        + " vs " + player2WithScore.getKey().getClass().getSimpleName());
+
                 int result = playMatch(player1WithScore.getKey(), player2WithScore.getKey());
 
                 if (result == 1) {
                     player1WithScore.setValue(player1WithScore.getValue() + 1);
+
+                    System.out.println("Gana el jugador " + player1WithScore.getKey().getClass().getSimpleName());
                 } else if (result == 2) {
                     player2WithScore.setValue(player2WithScore.getValue() + 1);
+
+                    System.out.println("Gana el jugador " + player2WithScore.getKey().getClass().getSimpleName());
+                } else {
+                    System.out.println("Empate");
                 }
             }
         }
@@ -84,7 +94,8 @@ public class Tournament {
                 inputManager,
                 arbiter,
                 player1,
-                player2
+                player2,
+                false
         );
 
         return ticTacToe.play();

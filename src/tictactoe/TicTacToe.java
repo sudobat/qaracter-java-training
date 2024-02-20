@@ -13,13 +13,15 @@ public class TicTacToe {
 
     private int currentPlayer;
 
-    public TicTacToe(
-            Board board,
-            BoardPrinter printer,
-            InputManager inputManager,
-            Arbiter arbiter,
-            Player player1,
-            Player player2
+    private final boolean debug;
+
+    public TicTacToe(Board board,
+                     BoardPrinter printer,
+                     InputManager inputManager,
+                     Arbiter arbiter,
+                     Player player1,
+                     Player player2,
+                     boolean debug
     ) {
         this.board = board;
         this.printer = printer;
@@ -29,11 +31,34 @@ public class TicTacToe {
         this.player2 = player2;
 
         currentPlayer = 1;
+
+        this.debug = debug;
+    }
+
+    public TicTacToe(
+            Board board,
+            BoardPrinter printer,
+            InputManager inputManager,
+            Arbiter arbiter,
+            Player player1,
+            Player player2
+    ) {
+        this(
+            board,
+            printer,
+            inputManager,
+            arbiter,
+            player1,
+            player2,
+            true
+        );
     }
 
     public int play() {
-        printer.print(board);
-        System.out.println("Le toca tirar al jugador " + currentPlayer);
+        if (debug) {
+            printer.print(board);
+            System.out.println("Le toca tirar al jugador " + currentPlayer);
+        }
 
         String input;
 
@@ -58,24 +83,37 @@ public class TicTacToe {
 
             board.update(currentPlayer, playerInput);
 
-            printer.print(board);
+            if (debug) {
+                printer.print(board);
+            }
 
             result = arbiter.checkIfGameIsFinished(board);
 
             if (result == 1) {
-                System.out.println("Ha ganado el jugador 1!");
+                if (debug) {
+                    System.out.println("Ha ganado el jugador 1!");
+                }
+                printer.print(board);
                 return result;
             } else if (result == 2) {
-                System.out.println("Ha ganado el jugador 2!");
+                if (debug) {
+                    System.out.println("Ha ganado el jugador 2!");
+                }
+                printer.print(board);
                 return result;
             } else if (result == 0) {
-                System.out.println("Empate!");
+                if (debug) {
+                    System.out.println("Empate!");
+                }
+                printer.print(board);
                 return result;
             }
 
             changeCurrentPlayer();
 
-            System.out.println("Le toca tirar al jugador " + currentPlayer);
+            if (debug) {
+                System.out.println("Le toca tirar al jugador " + currentPlayer);
+            }
         }
 
         return 0;
