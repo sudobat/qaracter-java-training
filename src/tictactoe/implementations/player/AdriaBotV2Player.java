@@ -14,15 +14,26 @@ public class AdriaBotV2Player implements Player {
     private final Arbiter arbiter;
     private final BoardPrinter boardPrinter;
 
-    public AdriaBotV2Player() {
+    private final boolean debug;
+
+    public AdriaBotV2Player(boolean debug) {
         arbiter = new ArbiterImplementation();
         boardPrinter = new BoardPrinterLarge();
+        this.debug = debug;
+    }
+
+    public AdriaBotV2Player() {
+        this(false);
     }
 
     @Override
     public String makeMove(ReadOnlyBoard board, int myTurn) {
 
-        boardPrinter.print(board);
+        long startTime = System.nanoTime();
+
+        if (debug) {
+            boardPrinter.print(board);
+        }
 
         int[] state = board.getState();
 
@@ -42,9 +53,11 @@ public class AdriaBotV2Player implements Player {
             Board newVirtualBoard = new BoardImplementation(virtualBoard.getState());
             newVirtualBoard.update(myTurn, availableMove + 1);
 
-            int moveValue = negaMax(newVirtualBoard, newTurn);
+            int moveValue = - 1 * negaMax(newVirtualBoard, newTurn);
 
-            System.out.println("Move = " + (availableMove + 1) + " evaluation = " + moveValue);
+            if (debug) {
+                System.out.println("Move = " + (availableMove + 1) + " evaluation = " + moveValue);
+            }
 
             if (moveValue > bestMoveValue) {
                 bestMove = availableMove;
@@ -52,8 +65,15 @@ public class AdriaBotV2Player implements Player {
             }
         }
 
-        System.out.println();
-        System.out.println("Best move = " + (bestMove + 1) + " evaluation = " + bestMoveValue);
+        if (debug) {
+            System.out.println();
+            System.out.println("Best move = " + (bestMove + 1) + " evaluation = " + bestMoveValue);
+
+            long endTime = System.nanoTime();
+            long duration = (endTime - startTime) / 1_000_000;
+
+            System.out.println("Execution time: " + duration + " ms");
+        }
 
         return String.valueOf(bestMove + 1);
     }
