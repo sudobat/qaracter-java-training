@@ -3,82 +3,65 @@ package tictactoe.implementations.player;
 import tictactoe.Player;
 import tictactoe.ReadOnlyBoard;
 
+import java.util.Scanner;
+
 public class JavierBotPlayer implements Player {
 
     @Override
     public String makeMove(ReadOnlyBoard board, int myTurn) {
-
         int[] state = board.getState();
-//        int winningPosition;
-//        winningPosition = findWinningMove(state, myTurn);
-//        if (winningPosition == -1) {
-            for (int position = 0; position < 9; position++) {
-                if (state[position] == 0) {
-                    return String.valueOf(position + 1);
-                }
-            }
-//        } else
-//            return String.valueOf(winningPosition + 1);
-        return "";
+        int bestMove = scorePlay(myTurn, state);
+        return String.valueOf((bestMove + 1));
     }
 
-//    private int findWinningMove(int[] state, int myTurn) {
-//        for (int i = 0; i < 9; i++) {
-//            if (state[i] == 0) {
-//                state[i] = myTurn;
-//                if (checkWin(myTurn, state)) {
-//                    state[i] = 0;
-//                    return i;
-//                }
-//                state[i] = 0;
-//            }
-//        }
-//
-//        int opponent;
-//        if (myTurn == 1)
-//            opponent = 2;
-//        else
-//            opponent = 1;
-//        for (int i = 0; i < 9; i++) {
-//            if (state[i] == 0) {
-//                state[i] = opponent;
-//                if (checkWin(opponent, state)) {
-//                    state[i] = 0;
-//                    return i;
-//                }
-//                state[i] = 0;
-//            }
-//        }
-//        return -1;
-//    }
 
+    // Tabla de valores:
+// 10 gana player
+// -10 pierde player
+// 1 empate
+// 0 continua el juego
     private int checkWin(int player, int[] state) {
+        int opponent = (player == 1) ? 2 : 1;
+        //Horizontales
         for (int i = 0; i < 3; i++) {
-            if (state[i * 3] == state[i * 3 + 1] && state[i * 3 + 1] == state[i * 3 + 2] ) {
-                if (state[i * 3]==player)
+            if (state[i * 3] == state[i * 3 + 1] && state[i * 3 + 1] == state[i * 3 + 2]) {
+                if (state[i * 3] == player)
                     return 10;
-                else
+                else if (state[i * 3] == opponent)
                     return -10;
             }
         }
-
+        //Verticales
         for (int i = 0; i < 3; i++) {
             if (state[i] == player && state[i + 3] == player && state[i + 6] == player) {
-                if (state[i * 3]==player)
+                if (state[i] == player)
                     return 10;
-                else
+                else if (state[i] == opponent)
                     return -10;
             }
         }
+        //Oblicuas
+        if (state[0] == state[4] && state[4] == state[8]) {
+            if (state[0] == player)
+                return 10;
+            else if (state[0] == opponent)
+                return -10;
+        }
+        if (state[2] == state[4] && state[4] == state[6]) {
+            if (state[2] == player)
+                return 10;
+            else if (state[2] == opponent)
+                return -10;
+        }
+        //Empate
+        for (int i = 0; i < 9; i++) {
+            if (state[i] == 0)
+                break;
+            if (i == 8)
+                return 1;
 
-//        if ((state[0] == player && state[4] == player && state[8] == player) ||
-//                (state[2] == player && state[4] == player && state[6] == player)) {
-//            if (state[i * 3]==player)
-//                return 10;
-//            else
-//                return -10;
-//        }
-
+        }
+        //Continue
         return 0;
     }
 
@@ -86,6 +69,12 @@ public class JavierBotPlayer implements Player {
         int opponent = (myTurn == 1) ? 2 : 1;
         int bestMove = -1;
         int bestScore = (myTurn == 1) ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+
+        int evaluation = checkWin(myTurn, state);
+
+        if (evaluation != 0) {
+            return evaluation;
+        }
 
         for (int i = 0; i < 9; i++) {
             if (state[i] == 0) {
@@ -106,7 +95,10 @@ public class JavierBotPlayer implements Player {
                 }
             }
         }
-
-        return 0;
+        if (myTurn == 1) {
+            return bestMove;
+        } else {
+            return bestScore;
+        }
     }
 }
