@@ -14,6 +14,7 @@ public class AdriaBotV2Player implements Player {
     private final BoardPrinter boardPrinter;
 
     private final boolean debug;
+    private int visitedNodes = 0;
 
     public AdriaBotV2Player(boolean debug) {
         arbiter = new ArbiterImplementation();
@@ -29,6 +30,7 @@ public class AdriaBotV2Player implements Player {
     public String makeMove(ReadOnlyBoard board, int myTurn) {
 
         long startTime = System.nanoTime();
+        visitedNodes = 1;
 
         if (debug) {
             boardPrinter.print(board);
@@ -51,6 +53,7 @@ public class AdriaBotV2Player implements Player {
         for (int availableMove : availableMoves) {
             Board newVirtualBoard = new BoardImplementation(virtualBoard.getState());
             newVirtualBoard.update(myTurn, availableMove + 1);
+            visitedNodes++;
 
             int moveValue = - 1 * negaMax(newVirtualBoard, newTurn);
 
@@ -66,12 +69,14 @@ public class AdriaBotV2Player implements Player {
 
         if (debug) {
             System.out.println();
-            System.out.println("Best move = " + (bestMove + 1) + " evaluation = " + bestMoveValue);
+            System.out.println("Best move = " + (bestMove + 1)
+                    + " evaluation = " + bestMoveValue);
 
             long endTime = System.nanoTime();
             long duration = (endTime - startTime) / 1_000_000;
 
-            System.out.println("Execution time: " + duration + " ms");
+            System.out.println("Time = " + duration + "ms"
+                    + " nodes = " + visitedNodes);
         }
 
         return String.valueOf(bestMove + 1);
@@ -108,6 +113,7 @@ public class AdriaBotV2Player implements Player {
         for (int availableMove : availableMoves) {
             Board newVirtualBoard = new BoardImplementation(state);
             newVirtualBoard.update(myTurn, availableMove + 1);
+            visitedNodes++;
 
             value = Math.max(value, -1 * negaMax(newVirtualBoard, newTurn));
         }
